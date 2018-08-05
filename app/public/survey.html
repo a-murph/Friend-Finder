@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<title>Sign-Up Survey</title>
+	<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+</head>
+<body>
+	<h1>Survey</h1>
+	<form>
+		<div id="profile-info">
+			<div class="form-row">
+				<input required type="text" name="profileName" id="profile-name">
+			</div>
+			<div class="form-row">
+				<input required type="text" name="profilePic" id="profile-pic">
+			</div>
+		</div>
+		<div id="survey-questions">
+			<div class="form-row">
+				<p class="question-title">Your mind is always buzzing with unexplored ideas and plans.</p>
+				<select name="q1" id="q1">
+					<option value="1">1 (strongly disagree)</option>
+					<option value="2">2</option>
+					<option value="3">3</option>
+					<option value="4">4</option>
+					<option value="5">5 (strongly agree)</option>
+				</select>
+			</div>
+			<div class="form-row">
+				<p class="question-title">Generally speaking, you rely more on your experience than your imagination.</p>
+				<select name="q2" id="q2">
+					<option value="1">1 (strongly disagree)</option>
+					<option value="2">2</option>
+					<option value="3">3</option>
+					<option value="4">4</option>
+					<option value="5">5 (strongly agree)</option>
+				</select>
+			</div>
+			<div class="form-row">
+				<p class="question-title">You find it easy to stay relaxed and focused even when there is some pressure.</p>
+				<select name="q3" id="q3">
+					<option value="1">1 (strongly disagree)</option>
+					<option value="2">2</option>
+					<option value="3">3</option>
+					<option value="4">4</option>
+					<option value="5">5 (strongly agree)</option>
+				</select>
+			</div>
+			<div class="form-row">
+				<p class="question-title">You rarely do something just out of sheer curiosity.</p>
+				<select name="q4" id="q4">
+					<option value="1">1 (strongly disagree)</option>
+					<option value="2">2</option>
+					<option value="3">3</option>
+					<option value="4">4</option>
+					<option value="5">5 (strongly agree)</option>
+				</select>
+			</div>
+			<div class="form-row">
+				<p class="question-title">People can rarely upset you.</p>
+				<select name="q5" id="q5">
+					<option value="1">1 (strongly disagree)</option>
+					<option value="2">2</option>
+					<option value="3">3</option>
+					<option value="4">4</option>
+					<option value="5">5 (strongly agree)</option>
+				</select>
+			</div>
+			<div class="form-row">
+				<p class="question-title">It is often difficult for you to relate to other people’s feelings.</p>
+				<select name="q6" id="q6">
+					<option value="1">1 (strongly disagree)</option>
+					<option value="2">2</option>
+					<option value="3">3</option>
+					<option value="4">4</option>
+					<option value="5">5 (strongly agree)</option>
+				</select>
+			</div>
+			<div class="form-row">
+				<p class="question-title">In a discussion, truth should be more important than people’s sensitivities.</p>
+				<select name="q7" id="q7">
+					<option value="1">1 (strongly disagree)</option>
+					<option value="2">2</option>
+					<option value="3">3</option>
+					<option value="4">4</option>
+					<option value="5">5 (strongly agree)</option>
+				</select>
+			</div>
+			<div class="form-row">
+				<p class="question-title">You rarely get carried away by fantasies and ideas.</p>
+				<select name="q8" id="q8">
+					<option value="1">1 (strongly disagree)</option>
+					<option value="2">2</option>
+					<option value="3">3</option>
+					<option value="4">4</option>
+					<option value="5">5 (strongly agree)</option>
+				</select>
+			</div>
+			<div class="form-row">
+				<p class="question-title">You think that everyone’s views should be respected regardless of whether they are supported by facts or not.</p>
+				<select name="q9" id="q9">
+					<option value="1">1 (strongly disagree)</option>
+					<option value="2">2</option>
+					<option value="3">3</option>
+					<option value="4">4</option>
+					<option value="5">5 (strongly agree)</option>
+				</select>
+			</div>
+			<div class="form-row">
+				<p class="question-title">You feel more energetic after spending time with a group of people.</p>
+				<select name="q10" id="q10">
+					<option value="1">1 (strongly disagree)</option>
+					<option value="2">2</option>
+					<option value="3">3</option>
+					<option value="4">4</option>
+					<option value="5">5 (strongly agree)</option>
+				</select>
+			</div>
+		</div>
+		<div class="form-row">
+			<input type="submit" id="submit-button">
+		</div>
+	</form>
+</body>
+</html>
+
+<script type="text/javascript">
+	$("#submit-button").on("click", function(event) {
+		event.preventDefault();
+
+		//save answers into object
+		var newProfile = {
+			name: $("#profile-name").val().trim(),
+			photo: $("#profile-pic").val().trim(),
+			scores: [
+				$("#q1").val(),
+				$("#q2").val(),
+				$("#q3").val(),
+				$("#q4").val(),
+				$("#q5").val(),
+				$("#q6").val(),
+				$("#q7").val(),
+				$("#q8").val(),
+				$("#q9").val(),
+				$("#q10").val()
+			]
+		};
+
+		console.log(newProfile);
+		
+		//POST request to API endpoint, sending newProfile object
+		$.post("/api/friends", newProfile, function(data) {
+			//data variable contains best-matched profile
+			//display name and image of best match
+			alert(data.name +"\n" +data.photo);
+		});
+	});
+</script>
